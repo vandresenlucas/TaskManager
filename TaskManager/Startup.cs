@@ -28,6 +28,8 @@ namespace TaskManager
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.Configure(Configuration);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
