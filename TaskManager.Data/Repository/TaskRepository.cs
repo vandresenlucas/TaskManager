@@ -1,4 +1,5 @@
-﻿using TaskEntity = TaskManager.Domain.TaskAggregate;
+﻿using Microsoft.EntityFrameworkCore;
+using TaskEntity = TaskManager.Domain.TaskAggregate;
 
 namespace TaskManager.Data.Repository
 {
@@ -7,5 +8,8 @@ namespace TaskManager.Data.Repository
         public TaskRepository(TaskManagerContext context) : base(context)
         {
         }
+
+        public async Task<IEnumerable<TaskEntity.Task>> GetAll()
+            => await _context.Set<TaskEntity.Task>().ToListAsync();
     }
 }

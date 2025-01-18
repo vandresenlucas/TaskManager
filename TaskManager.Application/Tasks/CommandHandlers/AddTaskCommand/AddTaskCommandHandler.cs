@@ -2,7 +2,7 @@
 using TaskManager.Domain.TaskAggregate;
 using TaskEntity = TaskManager.Domain.TaskAggregate;
 
-namespace TaskManager.Application.Tasks.CommandHandlers
+namespace TaskManager.Application.Tasks.CommandHandlers.AddTaskCommand
 {
     public class AddTaskCommandHandler : IRequestHandler<AddTaskCommand, Result>
     {
@@ -21,7 +21,7 @@ namespace TaskManager.Application.Tasks.CommandHandlers
 
             var newTask = await _taskRepository.AddAsync(task);
 
-            return new Result();
+            return new Result(response: newTask);
         }
     }
 }

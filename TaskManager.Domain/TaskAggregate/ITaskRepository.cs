@@ -2,5 +2,6 @@
 {
     public interface ITaskRepository : IRepository<Task>
     {
+        Task<IEnumerable<Task>> GetAll();
     }
 }
