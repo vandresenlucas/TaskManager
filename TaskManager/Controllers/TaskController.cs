@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using TaskManager.Application;
 using TaskManager.Application.Tasks.CommandHandlers.AddTaskCommand;
 using TaskManager.Application.Tasks.CommandHandlers.GetAllTaskCommand;
+using TaskManager.Application.Tasks.CommandHandlers.UpdateTaskCommand;
 
 namespace TaskManager.Controllers
 {
@@ -38,6 +39,22 @@ namespace TaskManager.Controllers
             try
             {
                 var command = new GetAllTasksCommand { UserId = userId };
+                var result = await _mediator.Send(command);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new Result(false, ex.Message));
+            }
+        }
+
+        [HttpPut(Name = "UpdateTask")]
+        public async Task<IActionResult> Put([FromQuery] Guid taskId, [FromBody] UpdateTaskCommand command)
+        {
+            try
+            {
+                command.Id = taskId;
                 var result = await _mediator.Send(command);
 
                 return Ok(result);

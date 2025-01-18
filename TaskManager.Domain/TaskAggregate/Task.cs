@@ -6,12 +6,14 @@
             string title, 
             string description, 
             Status status,
-            DateTime createdDate)
+            DateTime createdDate,
+            DateTime? updatedDate = null)
         {
             Title = title;
             Description = description;
             Status = status;
             CreatedDate = createdDate;
+            UpdatedDate = updatedDate;
         }
 
         public string Title { get; set; }

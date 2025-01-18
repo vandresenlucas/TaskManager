@@ -1,4 +1,5 @@
-﻿using TaskManager.Domain;
+﻿using Microsoft.EntityFrameworkCore;
+using TaskManager.Domain;
 
 namespace TaskManager.Data
 {
@@ -31,14 +32,32 @@ namespace TaskManager.Data
             throw new NotImplementedException();
         }
 
-        public Task<TEntity> GetByIdAsync(Guid id)
+        public async Task<TEntity> GetByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var result = await _context.Set<TEntity>().FirstOrDefaultAsync(e => e.Id.Equals(id));
+                _context.SaveChanges();
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
-        public Task<TEntity> UpdateAsync(TEntity entity)
+        public async Task<TEntity> UpdateAsync(TEntity entity)
         {
-            throw new NotImplementedException();
+            var result = await _context.Set<TEntity>().FirstOrDefaultAsync(e => e.Id == entity.Id);
+
+            if (result != null)
+            {
+                _context.Entry(result).CurrentValues.SetValues(entity);
+                _context.SaveChanges();
+            }
+
+            return entity;
         }
     }
 }
