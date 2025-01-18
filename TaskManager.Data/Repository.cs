@@ -1,9 +1,8 @@
 ﻿using TaskManager.Domain;
-using TaskManager.Domain.UserAggregate;
 
 namespace TaskManager.Data
 {
-    public class Repository<TEntity> : IRepository<User>
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity
     {
         protected readonly TaskManagerContext _context;
 
@@ -12,7 +11,7 @@ namespace TaskManager.Data
             _context = context;
         }
 
-        public async Task<User> AddAsync(User entity)
+        public async Task<TEntity> AddAsync(TEntity entity)
         {
             try
             {
@@ -32,12 +31,12 @@ namespace TaskManager.Data
             throw new NotImplementedException();
         }
 
-        public Task<User> GetByIdAsync(Guid id)
+        public Task<TEntity> GetByIdAsync(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<User> UpdateAsync(User entity)
+        public Task<TEntity> UpdateAsync(TEntity entity)
         {
             throw new NotImplementedException();
         }

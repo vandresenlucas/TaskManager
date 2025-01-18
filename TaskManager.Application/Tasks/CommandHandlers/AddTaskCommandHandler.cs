@@ -7,12 +7,10 @@ namespace TaskManager.Application.Tasks.CommandHandlers
     public class AddTaskCommandHandler : IRequestHandler<AddTaskCommand, Result>
     {
         private readonly ITaskRepository _taskRepository;
-        private readonly IMediator _mediator;
 
-        public AddTaskCommandHandler(ITaskRepository taskRepository, IMediator mediator)
+        public AddTaskCommandHandler(ITaskRepository taskRepository)
         {
             _taskRepository = taskRepository;
-            _mediator = mediator;
         }
 
         public async Task<Result> Handle(AddTaskCommand request, CancellationToken cancellationToken)
