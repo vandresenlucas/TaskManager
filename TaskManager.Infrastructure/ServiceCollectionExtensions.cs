@@ -1,5 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TaskManager.Infrastructure.Providers;
 
 namespace TaskManager.Infrastructure
 {
@@ -7,7 +9,16 @@ namespace TaskManager.Infrastructure
     {
         public static IServiceCollection RegisterServices(this IServiceCollection services, IConfiguration configuration)
         {
+            services.RegisterDatabase(configuration);
+
             return services;
+        }
+
+        public static IApplicationBuilder Configure(this IApplicationBuilder app, IConfiguration configuration)
+        {
+            app.AddInitialData();
+
+            return app;
         }
     }
 }
