@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace TaskManager.Application.Authentication
+namespace TaskManager.Application.Authentication.Services
 {
     public interface ITokenService
     {

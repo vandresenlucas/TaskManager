@@ -4,5 +4,6 @@
     {
         Task<IEnumerable<Task>> GetAll();
         Task<IEnumerable<Task>> GetByStatus(Status status);
+        Task<bool> ValidateCreatorTask(Guid taskId, Guid userId);
     }
 }

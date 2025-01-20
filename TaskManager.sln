@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManager.Data", "TaskMan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManager.Application", "TaskManager.Application\TaskManager.Application.csproj", "{AC050FD4-A30C-4AB9-A9EE-F771F905242D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManager.CrossCutting", "TaskManager.CrossCutting\TaskManager.CrossCutting.csproj", "{FF26D986-F2A9-4F47-A8F4-B29BF76B4673}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{AC050FD4-A30C-4AB9-A9EE-F771F905242D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC050FD4-A30C-4AB9-A9EE-F771F905242D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC050FD4-A30C-4AB9-A9EE-F771F905242D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF26D986-F2A9-4F47-A8F4-B29BF76B4673}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF26D986-F2A9-4F47-A8F4-B29BF76B4673}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF26D986-F2A9-4F47-A8F4-B29BF76B4673}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF26D986-F2A9-4F47-A8F4-B29BF76B4673}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

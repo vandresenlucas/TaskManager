@@ -1,15 +1,19 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using TaskManager.Application;
 using TaskManager.Application.Tasks.CommandHandlers.AddTask;
 using TaskManager.Application.Tasks.CommandHandlers.DeleteTask;
-using TaskManager.Application.Tasks.CommandHandlers.GetAllTask;
+using TaskManager.Application.Tasks.CommandHandlers.GetTasks;
 using TaskManager.Application.Tasks.CommandHandlers.UpdateTask;
 using TaskManager.Domain.TaskAggregate;
+using TaskManager.Domain.UserAggregate;
 
 namespace TaskManager.Controllers
 {
     [Route("TaskManager/[controller]")]
+    [Authorize("bearer")]
     [ApiController]
     public class TaskController : ControllerBase
     {
@@ -21,10 +25,14 @@ namespace TaskManager.Controllers
         }
 
         [HttpPost(Name = "AddTask")]
-        public async Task<IActionResult> Post([FromBody] AddTaskCommand command)
+        public async Task<IActionResult> AddTask([FromBody] AddTaskCommand command)
         {
             try
             {
+                var loggedUserId = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "UserId")?.Value;
+
+                command.CreatedByUserId = Guid.Parse(loggedUserId);
+
                 var result = await _mediator.Send(command);
 
                 return Ok(result);
@@ -36,11 +44,11 @@ namespace TaskManager.Controllers
         }
 
         [HttpGet(Name = "GetTasks")]
-        public async Task<IActionResult> Get([FromQuery] Status? status)
+        public async Task<IActionResult> GetTasks([FromQuery] Status? status)
         {
             try
             {
-                var command = new GetAllTasksCommand { Status = status };
+                var command = new GetTasksCommand { Status = status };
                 var result = await _mediator.Send(command);
 
                 return Ok(result);
@@ -52,11 +60,14 @@ namespace TaskManager.Controllers
         }
 
         [HttpPut(Name = "UpdateTask")]
-        public async Task<IActionResult> Put([FromQuery] Guid taskId, [FromBody] UpdateTaskCommand command)
+        public async Task<IActionResult> UpdateTask([FromQuery] Guid taskId, [FromBody] UpdateTaskCommand command)
         {
             try
             {
+                var loggedUserId = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "UserId")?.Value;
+
                 command.Id = taskId;
+                command.CreatedByUserId = Guid.Parse(loggedUserId);
                 var result = await _mediator.Send(command);
 
                 return Ok(result);
@@ -68,11 +79,13 @@ namespace TaskManager.Controllers
         }
 
         [HttpDelete(Name = "DeleteTask")]
-        public async Task<IActionResult> Delete([FromQuery] Guid taskId)
+        public async Task<IActionResult> DeleteTask([FromQuery] Guid taskId)
         {
             try
             {
-                var command = new DeleteTaskCommand { Id = taskId };
+                var loggedUserId = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "UserId")?.Value;
+
+                var command = new DeleteTaskCommand { Id = taskId, CreatedByUserId = Guid.Parse(loggedUserId) };
                 var result = await _mediator.Send(command);
 
                 return Ok(result);

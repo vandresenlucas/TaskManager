@@ -13,6 +13,7 @@ namespace TaskManager.Infrastructure
 
             services.ConfigureServices();
             services.ConfigureMediatr();
+            services.ConfigureAuthentication(configuration);
 
             return services;
         }

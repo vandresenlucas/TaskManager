@@ -19,6 +19,9 @@ namespace TaskManager.Application.Tasks.CommandHandlers.DeleteTask
             if (taskFound == null)
                 return new Result(false, "Tarefa não encontrada no sistema!!");
 
+            if (!await _taskRepository.ValidateCreatorTask(taskFound.Id, request.CreatedByUserId))
+                return new Result(false, "Apenas o usuário criador da tarefa pode excluí-la!!");
+
             await _taskRepository.DeleteAsync(request.Id);
 
             return new Result(message: "Tarefa excluída com sucesso!!");
