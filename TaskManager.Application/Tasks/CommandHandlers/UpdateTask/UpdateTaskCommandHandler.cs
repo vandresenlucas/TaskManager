@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using TaskManager.Domain.TaskAggregate;
 
-namespace TaskManager.Application.Tasks.CommandHandlers.UpdateTaskCommand
+namespace TaskManager.Application.Tasks.CommandHandlers.UpdateTask
 {
     public class UpdateTaskCommandHandler : IRequestHandler<UpdateTaskCommand, Result>
     {
@@ -19,13 +19,13 @@ namespace TaskManager.Application.Tasks.CommandHandlers.UpdateTaskCommand
             if (taskFound == null)
                 return new Result(false, "Tarefa não encontrada no sistema!!");
 
-            if (!String.IsNullOrEmpty(request.Title))
+            if (!string.IsNullOrEmpty(request.Title))
                 taskFound.Title = request.Title;
 
-            if (!String.IsNullOrEmpty(request.Description))
+            if (!string.IsNullOrEmpty(request.Description))
                 taskFound.Description = request.Description;
 
-            if(request.Status != null)
+            if (request.Status != null)
                 taskFound.Status = (Status)request.Status;
 
             var updatedTask = await _taskRepository.UpdateAsync(taskFound);

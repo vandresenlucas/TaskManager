@@ -33,9 +33,9 @@ namespace TaskManager.Infrastructure.Providers
             if (populated)
                 return;
 
-            context.Add(new User("Lucas", "lucas@gmail.com", "lucas", DateTime.UtcNow));
-            context.Add(new User("Henrique", "henrique@gmail.com", "henrique", DateTime.UtcNow));
-            context.Add(new User("Jéssica", "fabiana@gmail.com", "jessica", DateTime.UtcNow));
+            context.Add(new User("Lucas", "lucas@gmail.com", "lucas", DateTime.Now));
+            context.Add(new User("Henrique", "henrique@gmail.com", "henrique", DateTime.Now));
+            context.Add(new User("Jéssica", "fabiana@gmail.com", "jessica", DateTime.Now));
 
             context.SaveChanges();
         }

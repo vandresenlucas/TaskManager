@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using TaskEntity = TaskManager.Domain.TaskAggregate;
 
-namespace TaskManager.Application.Tasks.CommandHandlers.AddTaskCommand
+namespace TaskManager.Application.Tasks.CommandHandlers.AddTask
 {
     public class AddTaskCommand : IRequest<Result>
     {
@@ -18,7 +18,7 @@ namespace TaskManager.Application.Tasks.CommandHandlers.AddTaskCommand
                 command.Title,
                 command.Description,
                 command.Status,
-                DateTime.UtcNow);
+                DateTime.Now);
         }
     }
 }

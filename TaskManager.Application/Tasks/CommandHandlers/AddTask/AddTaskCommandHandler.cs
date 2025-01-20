@@ -2,7 +2,7 @@
 using TaskManager.Domain.TaskAggregate;
 using TaskEntity = TaskManager.Domain.TaskAggregate;
 
-namespace TaskManager.Application.Tasks.CommandHandlers.AddTaskCommand
+namespace TaskManager.Application.Tasks.CommandHandlers.AddTask
 {
     public class AddTaskCommandHandler : IRequestHandler<AddTaskCommand, Result>
     {

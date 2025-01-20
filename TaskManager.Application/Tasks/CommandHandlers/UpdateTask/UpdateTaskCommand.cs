@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using TaskEntity = TaskManager.Domain.TaskAggregate;
 
-namespace TaskManager.Application.Tasks.CommandHandlers.UpdateTaskCommand
+namespace TaskManager.Application.Tasks.CommandHandlers.UpdateTask
 {
     public class UpdateTaskCommand : IRequest<Result>
     {

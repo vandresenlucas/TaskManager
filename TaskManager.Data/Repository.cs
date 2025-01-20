@@ -27,9 +27,15 @@ namespace TaskManager.Data
             }
         }
 
-        public Task DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var result = await _context.Set<TEntity>().FirstOrDefaultAsync(p => p.Id == id);
+
+            if (result != null)
+            {
+                _context.Remove(result);
+                _context.SaveChanges();
+            }
         }
 
         public async Task<TEntity> GetByIdAsync(Guid id)

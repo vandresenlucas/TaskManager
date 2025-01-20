@@ -1,9 +1,11 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TaskManager.Application;
-using TaskManager.Application.Tasks.CommandHandlers.AddTaskCommand;
-using TaskManager.Application.Tasks.CommandHandlers.GetAllTaskCommand;
-using TaskManager.Application.Tasks.CommandHandlers.UpdateTaskCommand;
+using TaskManager.Application.Tasks.CommandHandlers.AddTask;
+using TaskManager.Application.Tasks.CommandHandlers.DeleteTask;
+using TaskManager.Application.Tasks.CommandHandlers.GetAllTask;
+using TaskManager.Application.Tasks.CommandHandlers.UpdateTask;
+using TaskManager.Domain.TaskAggregate;
 
 namespace TaskManager.Controllers
 {
@@ -33,12 +35,12 @@ namespace TaskManager.Controllers
             }
         }
 
-        [HttpGet(Name = "GetAll")]
-        public async Task<IActionResult> Get([FromQuery] Guid userId)
+        [HttpGet(Name = "GetTasks")]
+        public async Task<IActionResult> Get([FromQuery] Status? status)
         {
             try
             {
-                var command = new GetAllTasksCommand { UserId = userId };
+                var command = new GetAllTasksCommand { Status = status };
                 var result = await _mediator.Send(command);
 
                 return Ok(result);
@@ -55,6 +57,22 @@ namespace TaskManager.Controllers
             try
             {
                 command.Id = taskId;
+                var result = await _mediator.Send(command);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new Result(false, ex.Message));
+            }
+        }
+
+        [HttpDelete(Name = "DeleteTask")]
+        public async Task<IActionResult> Delete([FromQuery] Guid taskId)
+        {
+            try
+            {
+                var command = new DeleteTaskCommand { Id = taskId };
                 var result = await _mediator.Send(command);
 
                 return Ok(result);
