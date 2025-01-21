@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.Extensions.Logging;
 using TaskManager.CrossCutting.Contracts;
 using TaskManager.Domain;
 using TaskAggregate = TaskManager.Domain.TaskAggregate;
@@ -9,11 +10,13 @@ namespace TaskManager.Application.Tasks.CommandHandlers.UpdateTask
     {
         private readonly TaskAggregate.ITaskRepository _taskRepository;
         private readonly IRedisRepository _redisRepository;
+        private readonly ILogger<UpdateTaskCommandHandler> _logger;
 
-        public UpdateTaskCommandHandler(TaskAggregate.ITaskRepository taskRepository, IRedisRepository redisRepository)
+        public UpdateTaskCommandHandler(TaskAggregate.ITaskRepository taskRepository, IRedisRepository redisRepository, ILogger<UpdateTaskCommandHandler> logger)
         {
             _taskRepository = taskRepository;
             _redisRepository = redisRepository;
+            _logger = logger;
         }
 
         public async Task<Result> Handle(UpdateTaskCommand request, CancellationToken cancellationToken)
@@ -28,6 +31,7 @@ namespace TaskManager.Application.Tasks.CommandHandlers.UpdateTask
                 return new Result(false, "Apenas o usuário criador da tarefa pode atualiza-la!!");
 
             var updatedTask = await UpdateTask(request, taskFound);
+            _logger.LogInformation($"Tarefa atualizada com sucesso. Id: {updatedTask.Id}.");
 
             await _redisRepository.DeleteAsync(cacheKey);
 

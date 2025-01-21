@@ -18,10 +18,12 @@ namespace TaskManager.Controllers
     public class TaskController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly ILogger<TaskController> _logger;
 
-        public TaskController(IMediator mediator)
+        public TaskController(IMediator mediator, ILogger<TaskController> logger)
         {
             _mediator = mediator;
+            _logger = logger;
         }
 
         [HttpPost(Name = "AddTask")]
@@ -38,6 +40,7 @@ namespace TaskManager.Controllers
             try
             {
                 var loggedUserId = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "UserId")?.Value;
+                _logger.LogInformation($"UsuárioId: {loggedUserId} adicionando uma tarefa.");
 
                 command.CreatedByUserId = Guid.Parse(loggedUserId);
 
@@ -47,6 +50,7 @@ namespace TaskManager.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError($"Erro ao adicionar tarefa: {ex.Message}");
                 return BadRequest(new Result(false, ex.Message));
             }
         }
@@ -64,6 +68,8 @@ namespace TaskManager.Controllers
         {
             try
             {
+                _logger.LogInformation($"UsuárioId: {HttpContext.User.Claims.FirstOrDefault(c => c.Type == "UserId")?.Value} buscando tarefas.");
+
                 command.Status = status;
                 var result = await _mediator.Send(command);
 
@@ -71,6 +77,7 @@ namespace TaskManager.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError($"Erro ao buscar tarefas: {ex.Message}");
                 return BadRequest(new Result(false, ex.Message));
             }
         }
@@ -89,15 +96,20 @@ namespace TaskManager.Controllers
             try
             {
                 var loggedUserId = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "UserId")?.Value;
+                _logger.LogInformation($"UsuárioId: {loggedUserId} tentando atualizar tarefa. TaskId: {taskId}");
 
                 command.Id = taskId;
                 command.CreatedByUserId = Guid.Parse(loggedUserId);
                 var result = await _mediator.Send(command);
 
+                if (!result.Success)
+                    _logger.LogError($"Tarefa não atualizada. Motivo: {result.Message}");
+
                 return Ok(result);
             }
             catch (Exception ex)
             {
+                _logger.LogError($"Erro ao atualizar tarefa: {ex.Message}");
                 return BadRequest(new Result(false, ex.Message));
             }
         }
@@ -116,9 +128,13 @@ namespace TaskManager.Controllers
             try
             {
                 var loggedUserId = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "UserId")?.Value;
+                _logger.LogInformation($"UsuárioId: {loggedUserId} tentando excluir tarefa. TaskId: {taskId}");
 
                 var command = new DeleteTaskCommand { Id = taskId, CreatedByUserId = Guid.Parse(loggedUserId) };
                 var result = await _mediator.Send(command);
+
+                if (!result.Success)
+                    _logger.LogError($"Tarefa não atualizada. Motivo: {result.Message}");
 
                 return Ok(result);
             }
