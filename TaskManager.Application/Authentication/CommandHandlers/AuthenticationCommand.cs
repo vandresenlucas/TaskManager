@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Swashbuckle.AspNetCore.Annotations;
+using TaskManager.CrossCutting.Contracts;
 using TaskManager.Domain.UserAggregate;
 
 namespace TaskManager.Application.Authentication.CommandHandlers

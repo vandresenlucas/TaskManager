@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Swashbuckle.AspNetCore.Annotations;
+using TaskManager.CrossCutting.Contracts;
 
 namespace TaskManager.Application.Tasks.CommandHandlers.DeleteTask
 {

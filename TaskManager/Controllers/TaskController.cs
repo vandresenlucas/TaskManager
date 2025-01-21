@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
-using TaskManager.Application;
 using TaskManager.Application.Tasks.CommandHandlers.AddTask;
 using TaskManager.Application.Tasks.CommandHandlers.DeleteTask;
 using TaskManager.Application.Tasks.CommandHandlers.GetTasks;
 using TaskManager.Application.Tasks.CommandHandlers.UpdateTask;
+using TaskManager.CrossCutting.Contracts;
 using TaskManager.Domain.TaskAggregate;
 
 namespace TaskManager.Controllers
@@ -60,11 +60,11 @@ namespace TaskManager.Controllers
         )]
         [ProducesResponseType(typeof(Result), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(Result), (int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> GetTasks([FromQuery] Status? status)
+        public async Task<IActionResult> GetTasks([FromQuery] Status? status, [FromBody] GetTasksCommand command)
         {
             try
             {
-                var command = new GetTasksCommand { Status = status };
+                command.Status = status;
                 var result = await _mediator.Send(command);
 
                 return Ok(result);
