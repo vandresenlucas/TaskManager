@@ -1,14 +1,14 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
+using Swashbuckle.AspNetCore.Annotations;
+using System.Net;
 using TaskManager.Application;
 using TaskManager.Application.Tasks.CommandHandlers.AddTask;
 using TaskManager.Application.Tasks.CommandHandlers.DeleteTask;
 using TaskManager.Application.Tasks.CommandHandlers.GetTasks;
 using TaskManager.Application.Tasks.CommandHandlers.UpdateTask;
 using TaskManager.Domain.TaskAggregate;
-using TaskManager.Domain.UserAggregate;
 
 namespace TaskManager.Controllers
 {
@@ -25,6 +25,14 @@ namespace TaskManager.Controllers
         }
 
         [HttpPost(Name = "AddTask")]
+        [SwaggerOperation(
+            Summary = "Adiciona uma nova tarefa ao sistema",
+            Description = "Recebe os dados de uma nova tarefa (título, descrição, status e usuário criador) e a adiciona ao sistema.",
+            OperationId = "AddTask",
+            Tags = new[] { "Adiciona Tarefas" }
+        )]
+        [ProducesResponseType(typeof(Result), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(Result), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> AddTask([FromBody] AddTaskCommand command)
         {
             try
@@ -44,6 +52,14 @@ namespace TaskManager.Controllers
         }
 
         [HttpGet(Name = "GetTasks")]
+        [SwaggerOperation(
+            Summary = "Obtém uma lista de tarefas com possibilidade de filtrar pelo status",
+            Description = "Retorna uma lista de tarefas, com a possibilidade de filtrar pelo status (Pendentes, Em andamento ou Concluídas).",
+            OperationId = "GetTasks",
+            Tags = new[] { "Busca Tarefas" }
+        )]
+        [ProducesResponseType(typeof(Result), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(Result), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> GetTasks([FromQuery] Status? status)
         {
             try
@@ -60,6 +76,14 @@ namespace TaskManager.Controllers
         }
 
         [HttpPut(Name = "UpdateTask")]
+        [SwaggerOperation(
+            Summary = "Atualiza os detalhes de uma tarefa existente",
+            Description = "Atualiza os detalhes de uma tarefa já existente, como título, descrição e status.",
+            OperationId = "UpdateTask",
+            Tags = new[] { "Atualiza Tarefas" }
+        )]
+        [ProducesResponseType(typeof(Result), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(Result), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> UpdateTask([FromQuery] Guid taskId, [FromBody] UpdateTaskCommand command)
         {
             try
@@ -79,6 +103,14 @@ namespace TaskManager.Controllers
         }
 
         [HttpDelete(Name = "DeleteTask")]
+        [SwaggerOperation(
+            Summary = "Exclui uma tarefa do sistema",
+            Description = "Exclui uma tarefa existente com base no seu ID. Obs.: Apenas o usuário que criou a tarefa, poderá excluí-la.",
+            OperationId = "DeleteTask",
+            Tags = new[] { "Excluí Tarefas" }
+        )]
+        [ProducesResponseType(typeof(Result), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(Result), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> DeleteTask([FromQuery] Guid taskId)
         {
             try
