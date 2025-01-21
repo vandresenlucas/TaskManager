@@ -14,6 +14,8 @@ namespace TaskManager.Infrastructure
             services.ConfigureServices();
             services.ConfigureMediatr();
             services.ConfigureAuthentication(configuration);
+            services.ConfigureSwagger();
+            services.ConfigureRedis(configuration);
 
             return services;
         }
