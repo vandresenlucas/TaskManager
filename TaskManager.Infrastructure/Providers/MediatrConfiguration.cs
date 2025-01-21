@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using TaskManager.Application.Tasks.CommandHandlers.GetTasks;
 
 namespace TaskManager.Infrastructure.Providers
 {
@@ -8,6 +9,7 @@ namespace TaskManager.Infrastructure.Providers
         {
             var assembly = AppDomain.CurrentDomain.Load("TaskManager.Application");
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(assembly));
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<GetTasksCommandHandler>());
 
             return services;
         }

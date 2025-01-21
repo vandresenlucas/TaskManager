@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"  # Mapeia a porta 6379 do container para a porta 6379 local
+    volumes:
+      - redis-data:/data  # Armazenamento persistente para dados do Redis
+    restart: always  # O container será reiniciado automaticamente em caso de falha
+
+volumes:
+  redis-data:
+    driver: local  # Usa o driver local para armazenar dados persistentes no volume

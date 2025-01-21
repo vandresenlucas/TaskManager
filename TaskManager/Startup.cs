@@ -1,6 +1,5 @@
 ﻿using Microsoft.OpenApi.Models;
 using TaskManager.Infrastructure;
-using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace TaskManager
 {
@@ -23,31 +22,6 @@ namespace TaskManager
             }));
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Title = "TaskManager",
-                    Version = "v1"
-                });
-
-                c.EnableAnnotations();
-
-                //Inclui o XML do TaskManager
-                var mainXml = Path.Combine(AppContext.BaseDirectory, "TaskManager.xml");
-                if (File.Exists(mainXml))
-                {
-                    c.IncludeXmlComments(mainXml);
-                }
-
-                //Inclui o XML das anotações da TaskManager.Application.dll 
-                var applicationDllXml = Path.Combine(AppContext.BaseDirectory, "TaskManager.Application.xml");
-                if (File.Exists(applicationDllXml))
-                {
-                    c.IncludeXmlComments(applicationDllXml);
-                }
-            });
-
             services.RegisterServices(Configuration);
         }
 

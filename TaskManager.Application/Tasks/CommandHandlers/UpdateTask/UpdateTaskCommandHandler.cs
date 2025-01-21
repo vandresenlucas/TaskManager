@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using TaskManager.CrossCutting.Contracts;
+using TaskManager.Domain;
 using TaskAggregate = TaskManager.Domain.TaskAggregate;
 
 namespace TaskManager.Application.Tasks.CommandHandlers.UpdateTask
@@ -7,14 +8,17 @@ namespace TaskManager.Application.Tasks.CommandHandlers.UpdateTask
     public class UpdateTaskCommandHandler : IRequestHandler<UpdateTaskCommand, Result>
     {
         private readonly TaskAggregate.ITaskRepository _taskRepository;
+        private readonly IRedisRepository _redisRepository;
 
-        public UpdateTaskCommandHandler(TaskAggregate.ITaskRepository taskRepository)
+        public UpdateTaskCommandHandler(TaskAggregate.ITaskRepository taskRepository, IRedisRepository redisRepository)
         {
             _taskRepository = taskRepository;
+            _redisRepository = redisRepository;
         }
 
         public async Task<Result> Handle(UpdateTaskCommand request, CancellationToken cancellationToken)
         {
+            var cacheKey = $"{nameof(TaskAggregate.Task)}:{DateTime.Now.Date}";
             var taskFound = await _taskRepository.GetByIdAsync(request.Id);
 
             if (taskFound == null)
@@ -24,6 +28,8 @@ namespace TaskManager.Application.Tasks.CommandHandlers.UpdateTask
                 return new Result(false, "Apenas o usuário criador da tarefa pode atualiza-la!!");
 
             var updatedTask = await UpdateTask(request, taskFound);
+
+            await _redisRepository.DeleteAsync(cacheKey);
 
             return new Result(response: updatedTask);
         }
