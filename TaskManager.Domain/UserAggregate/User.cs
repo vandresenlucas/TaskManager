@@ -3,19 +3,21 @@
     public class User : Entity
     {
         public User(
-            string name, 
+            string fullName, 
             string email, 
             string password,
             DateTime createdDate)
         {
-            Name = name;
+            FullName = fullName;
             Email = email;
             Password = password;
             CreatedDate = createdDate;
         }
 
-        public string Name{ get; set; }
+        public string FullName{ get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public string RefreshToken { get; set; } = string.Empty;
+        public DateTime? ExpirationDate { get; set; }
     }
 }

@@ -11,6 +11,10 @@ namespace TaskManager.Infrastructure
         {
             services.RegisterDatabase(configuration);
 
+            services.ConfigureServices();
+            services.ConfigureMediatr();
+            services.ConfigureAuthentication(configuration);
+
             return services;
         }
 

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TaskManager.CrossCutting.Extensions;
 using TaskManager.Data;
 using TaskManager.Domain.UserAggregate;
 
@@ -33,9 +34,9 @@ namespace TaskManager.Infrastructure.Providers
             if (populated)
                 return;
 
-            context.Add(new User("Lucas", "lucas@gmail.com", "lucas", DateTime.UtcNow));
-            context.Add(new User("Henrique", "henrique@gmail.com", "henrique", DateTime.UtcNow));
-            context.Add(new User("Jéssica", "fabiana@gmail.com", "jessica", DateTime.UtcNow));
+            context.Add(new User("Lucas Vandresen Santana", "lucas@gmail.com", "lucas".CalculateSHA256Hash(), DateTime.Now));
+            context.Add(new User("Henrique Vandresen Santana", "henrique@gmail.com", "henrique".CalculateSHA256Hash(), DateTime.Now));
+            context.Add(new User("Jéssica Vandresen Santana", "jessica@gmail.com", "jessica".CalculateSHA256Hash(), DateTime.Now));
 
             context.SaveChanges();
         }
