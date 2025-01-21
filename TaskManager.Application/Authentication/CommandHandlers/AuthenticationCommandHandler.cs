@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using TaskManager.Application.Authentication.Services;
 using TaskManager.CrossCutting.Configurations;
+using TaskManager.CrossCutting.Contracts;
 using TaskManager.Domain.UserAggregate;
 
 namespace TaskManager.Application.Authentication.CommandHandlers

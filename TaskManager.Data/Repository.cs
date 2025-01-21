@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
+using TaskManager.CrossCutting.Contracts.Responses;
 using TaskManager.Domain;
 
 namespace TaskManager.Data
@@ -64,6 +66,43 @@ namespace TaskManager.Data
             }
 
             return entity;
+        }
+
+        public async Task<PaginatedResponse<TEntity>> GetAllPaginated(int page, int pageSize)
+        {
+            var query = _context.Set<TEntity>().AsQueryable();
+
+            var totalCount = await query.CountAsync();
+            var items = await query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .OrderByDescending(i => i.CreatedDate)
+                .ToListAsync();
+
+            return new PaginatedResponse<TEntity>(
+                items,
+                totalCount,
+                pageSize,
+                page);
+        }
+
+        public async Task<PaginatedResponse<TEntity>> GetByFilterExpressionPaginated(Expression<Func<TEntity, bool>> filterExpression, int page, int pageSize)
+        {
+            var query = _context.Set<TEntity>().Where(filterExpression);
+            var totalCount = await query.CountAsync();
+
+            var totalRecords = await query.CountAsync();
+            var items = await query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .OrderByDescending(i => i.CreatedDate)
+                .ToListAsync();
+
+            return new PaginatedResponse<TEntity>(
+                items,
+                totalCount,
+                pageSize,
+                page);
         }
     }
 }

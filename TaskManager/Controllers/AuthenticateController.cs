@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
-using TaskManager.Application;
 using TaskManager.Application.Authentication.CommandHandlers;
+using TaskManager.CrossCutting.Contracts;
 
 namespace TaskManager.Controllers
 {

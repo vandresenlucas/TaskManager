@@ -1,6 +1,6 @@
 ﻿using Swashbuckle.AspNetCore.Annotations;
 
-namespace TaskManager.Application
+namespace TaskManager.CrossCutting.Contracts
 {
     [SwaggerSchema(Description = "Representa o resultado de uma operação.")]
     public class Result

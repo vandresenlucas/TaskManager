@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using TaskManager.CrossCutting.Contracts;
 using TaskManager.Domain.TaskAggregate;
 
 namespace TaskManager.Application.Tasks.CommandHandlers.DeleteTask
