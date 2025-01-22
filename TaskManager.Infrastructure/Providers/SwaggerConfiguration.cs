@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
 namespace TaskManager.Infrastructure.Providers
@@ -11,8 +12,17 @@ namespace TaskManager.Infrastructure.Providers
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "TaskManager",
+                    Title = "Task Manager API",
                     Version = "v1"
+                });
+
+                c.DocInclusionPredicate((version, apiDesc) =>
+                {
+                    var versions = apiDesc.ActionDescriptor.EndpointMetadata
+                        .OfType<ApiVersionAttribute>()
+                        .SelectMany(attr => attr.Versions);
+
+                    return versions.Any(v => $"v{v}" == version);
                 });
 
                 c.EnableAnnotations();
