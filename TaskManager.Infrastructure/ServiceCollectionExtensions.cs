@@ -16,6 +16,7 @@ namespace TaskManager.Infrastructure
             services.ConfigureAuthentication(configuration);
             services.ConfigureSwagger();
             services.ConfigureRedis(configuration);
+            services.ConfigureMvc();
 
             return services;
         }

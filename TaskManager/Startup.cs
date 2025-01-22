@@ -1,5 +1,4 @@
-﻿using Microsoft.OpenApi.Models;
-using TaskManager.Infrastructure;
+﻿using TaskManager.Infrastructure;
 
 namespace TaskManager
 {
