@@ -23,11 +23,7 @@ public class AddUserCommandHandlerTests
     public async Task HandleShouldReturnErrorWhenEmailAlreadyExists()
     {
         // Arrange
-        var command = new AddUserCommand
-        {
-            Email = "test@example.com",
-            Password = "ValidPassword1!"
-        };
+        var command = UserCommandModelTest.UserCommandDefault();
 
         _userRepositoryMock
             .Setup(repo => repo.VerifyUserExists(command.Email))
@@ -45,11 +41,7 @@ public class AddUserCommandHandlerTests
     public async Task HandleShouldReturnErrorWhenPasswordIsInvalid()
     {
         // Arrange
-        var command = new AddUserCommand
-        {
-            Email = "test@example.com",
-            Password = "short"
-        };
+        var command = UserCommandModelTest.UserCommandWithPassword("teste123");
 
         _userRepositoryMock
             .Setup(repo => repo.VerifyUserExists(command.Email))
@@ -67,11 +59,7 @@ public class AddUserCommandHandlerTests
     public async Task HandleShouldReturnSuccessWhenUserIsAddedSuccessfully()
     {
         // Arrange
-        var command = new AddUserCommand
-        {
-            Email = "test@example.com",
-            Password = "ValidPassword1!"
-        };
+        var command = UserCommandModelTest.UserCommandDefault();
 
         var user = UserModelTest.UserDefault();
 

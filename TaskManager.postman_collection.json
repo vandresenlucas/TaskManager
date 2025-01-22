@@ -1,0 +1,274 @@
+{
+	"info": {
+		"_postman_id": "24d7ab0f-480c-459d-8215-27706ed6e051",
+		"name": "TaskManager",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4469486"
+	},
+	"item": [
+		{
+			"name": "Tasks",
+			"item": [
+				{
+					"name": "AddTask",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AccessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"string\",\r\n  \"description\": \"string\",\r\n  \"status\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7098/TaskManager/Task",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7098",
+							"path": [
+								"TaskManager",
+								"Task"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetTasks",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AccessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"CurrentPage\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7098/TaskManager/Task",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7098",
+							"path": [
+								"TaskManager",
+								"Task"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateTask",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AccessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Teste\",\r\n  \"description\": \"Teste\",\r\n  \"status\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7098/TaskManager/Task?taskId=f11a7fff-3722-4623-b414-dc9d6bd9a50b",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7098",
+							"path": [
+								"TaskManager",
+								"Task"
+							],
+							"query": [
+								{
+									"key": "taskId",
+									"value": "f11a7fff-3722-4623-b414-dc9d6bd9a50b"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteTask",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{AccessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7098/TaskManager/Task?taskId=1a42d1b3-a28c-414b-906d-f1c4eaa1fe15",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7098",
+							"path": [
+								"TaskManager",
+								"Task"
+							],
+							"query": [
+								{
+									"key": "taskId",
+									"value": "1a42d1b3-a28c-414b-906d-f1c4eaa1fe15"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Authenticate",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code >= 200 && pm.response.code <= 299) {\r",
+									"    var jsonData = pm.response.json();\r",
+									"\r",
+									"    pm.environment.set('AccessToken', jsonData.response);\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"lucas@gmail.com\",\r\n  \"password\": \"lucas\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/Authenticate",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"Authenticate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "AddUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"joel@gmail.com\",\r\n    \"fullName\": \"Joel Santana\",\r\n    \"password\": \"Joel@1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl}}/User",
+							"host": [
+								"{{BaseUrl}}"
+							],
+							"path": [
+								"User"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
