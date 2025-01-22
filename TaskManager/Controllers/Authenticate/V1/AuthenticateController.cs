@@ -1,14 +1,19 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
 using TaskManager.Application.Authentication.CommandHandlers;
 using TaskManager.CrossCutting.Contracts;
 
-namespace TaskManager.Controllers
+namespace TaskManager.Controllers.Authenticate.V1
 {
-    [Route("TaskManager/[controller]")]
+    //[Route("TaskManager/[controller]")]
+    //[ApiController]
+    [ApiVersion("1")]
     [ApiController]
+    [Authorize("bearer")]
+    [Route("api/v{version:apiVersion}/task-manager/[controller]")]
     public class AuthenticateController : ControllerBase
     {
         private readonly IMediator _mediator;

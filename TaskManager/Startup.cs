@@ -1,5 +1,4 @@
-﻿using FluentValidation.AspNetCore;
-using TaskManager.Infrastructure;
+﻿using TaskManager.Infrastructure;
 
 namespace TaskManager
 {
@@ -21,7 +20,6 @@ namespace TaskManager
                 .AllowAnyHeader();
             }));
 
-            services.AddFluentValidationAutoValidation();
             services.AddControllers();
             services.RegisterServices(Configuration);
         }
@@ -30,20 +28,20 @@ namespace TaskManager
         {
             app.Configure(Configuration);
 
+            app.UseRouting();
+            app.UseHttpsRedirection();
+            app.UseCors();
+
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "TaskManager API v1");
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Task Manager API v1.0");
+                    c.SwaggerEndpoint("/swagger/v2/swagger.json", "Task Manager API v2.0");
                 });
             }
-
-            app.UseRouting();
-            app.UseCors();
-            app.UseHttpsRedirection();
-            app.UseAuthentication();
+            
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {

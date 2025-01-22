@@ -1,14 +1,18 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
 using TaskManager.Application.Users.CommandHandlers;
 using TaskManager.CrossCutting.Contracts;
 
-namespace TaskManager.Controllers
+namespace TaskManager.Controllers.User.V1
 {
-    [Route("TaskManager/[controller]")]
+    //[Route("TaskManager/[controller]")]
+    //[ApiController]
+    [ApiVersion("1")]
     [ApiController]
+    [Route("api/v{version:apiVersion}/task-manager/[controller]")]
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;

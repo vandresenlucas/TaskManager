@@ -10,11 +10,12 @@ using TaskManager.Application.Tasks.CommandHandlers.UpdateTask;
 using TaskManager.CrossCutting.Contracts;
 using TaskManager.Domain.TaskAggregate;
 
-namespace TaskManager.Controllers
+namespace TaskManager.Controllers.Task.V1
 {
-    [Route("TaskManager/[controller]")]
-    [Authorize("bearer")]
+    [ApiVersion("1")]
     [ApiController]
+    [Authorize("bearer")]
+    [Route("api/v{version:apiVersion}/task-manager/[controller]")]
     public class TaskController : ControllerBase
     {
         private readonly IMediator _mediator;

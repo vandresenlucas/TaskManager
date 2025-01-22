@@ -10,10 +10,10 @@ namespace TaskManager.Infrastructure
         public static IServiceCollection RegisterServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.RegisterDatabase(configuration);
-
             services.ConfigureServices();
             services.ConfigureMediatr();
             services.ConfigureAuthentication(configuration);
+            services.AddApiVersioning(opt => opt.ReportApiVersions = true);
             services.ConfigureSwagger();
             services.ConfigureRedis(configuration);
 
