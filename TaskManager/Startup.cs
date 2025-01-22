@@ -1,4 +1,4 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using FluentValidation.AspNetCore;
 using TaskManager.Infrastructure;
 
 namespace TaskManager
@@ -21,6 +21,7 @@ namespace TaskManager
                 .AllowAnyHeader();
             }));
 
+            services.AddFluentValidationAutoValidation();
             services.AddControllers();
             services.RegisterServices(Configuration);
         }

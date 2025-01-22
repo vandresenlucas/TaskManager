@@ -17,5 +17,8 @@ namespace TaskManager.Data.Repository
 
             return await _context.Set<User>().FirstOrDefaultAsync(u => u.Email == credentials.Email && u.Password == password);
         }
+
+        public async Task<bool> VerifyUserExists(string email)
+            => await _context.Set<User>().AnyAsync(u => u.Email == email);
     }
 }

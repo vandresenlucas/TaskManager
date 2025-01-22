@@ -25,8 +25,6 @@ namespace TaskManager.Application.Tasks.CommandHandlers.AddTask
             TaskAggregate.Task task = request;
             var cacheKey = $"{nameof(TaskAggregate.Task)}:{DateTime.Now.Date}";
 
-            //fazer validação por título
-
             var newTask = await _taskRepository.AddAsync(task);
 
             _logger.LogInformation($"Tarefa adicionada com sucesso. Id: {newTask.Id}.");
