@@ -62,6 +62,7 @@ public class AddUserCommandHandlerTests
         var command = UserCommandModelTest.UserCommandDefault();
 
         var user = UserModelTest.UserDefault();
+        var userResponse = new AddUserResponse { Email = user.Email, FullName = user.FullName };
 
         _userRepositoryMock
             .Setup(repo => repo.VerifyUserExists(command.Email))
@@ -77,7 +78,7 @@ public class AddUserCommandHandlerTests
         // Assert
         Assert.True(result.Success);
         Assert.NotNull(result.Response);
-        Assert.Equal(user, result.Response);
+        Assert.Equivalent(userResponse, result.Response);
     }
 }
 

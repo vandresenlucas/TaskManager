@@ -29,8 +29,9 @@ namespace TaskManager.Application.Users.CommandHandlers
                 return new Result(false, $"A senha deve ter no mínimo 8 caractere, letras maiúsculas, minúsculas, números e caracteres especiais!!");
 
             var newUser = await _userRepository.AddAsync(user);
+            var response = new AddUserResponse { Email = newUser.Email, FullName = newUser.FullName };
 
-            return new Result(response: newUser);
+            return new Result(response: response);
         }
     }
 }

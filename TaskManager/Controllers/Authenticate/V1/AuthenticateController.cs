@@ -12,7 +12,6 @@ namespace TaskManager.Controllers.Authenticate.V1
     //[ApiController]
     [ApiVersion("1")]
     [ApiController]
-    [Authorize("bearer")]
     [Route("api/v{version:apiVersion}/task-manager/[controller]")]
     public class AuthenticateController : ControllerBase
     {

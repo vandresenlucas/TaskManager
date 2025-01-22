@@ -15,7 +15,7 @@ namespace TaskManager.Data.Repository
         {
             var password = credentials.Password.CalculateSHA256Hash();
 
-            return await _context.Set<User>().FirstOrDefaultAsync(u => u.Email == credentials.Email && u.Password == password);
+            return await _context.Set<User>().FirstOrDefaultAsync(u => u.Email == credentials.Email && u.Password.CalculateSHA256Hash() == password);
         }
 
         public async Task<bool> VerifyUserExists(string email)

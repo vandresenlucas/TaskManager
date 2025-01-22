@@ -34,7 +34,7 @@ namespace TaskManager.Infrastructure.Providers
             if (populated)
                 return;
 
-            context.Add(new User("admin", "admin@gmail.com", "Admin@1234".CalculateSHA256Hash(), DateTime.Now));
+            context.Add(new User("admin", "admin@gmail.com", "Admin@1234", DateTime.Now));
 
             context.SaveChanges();
         }
