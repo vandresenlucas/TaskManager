@@ -9,7 +9,7 @@ Também será aberto o Swagger com a documentação da API no browser.
 
 Autenticação de usuários:
 
-- Importar o arquivo TaskManager.postman_collection no postman para realização das operações da API
+- Importar os arquivos TaskManager.postman_collection e Environment TaskManager.postman_environment no postman para realização das operações da API
 - No postman fazer a autenticação de usuário:
 	- TaskManager/Tasks/Authenticate
 		- Login (dados:
